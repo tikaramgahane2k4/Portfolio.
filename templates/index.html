@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="hero-visual reveal-right">
-                <img src="/static/img/boy-logo.avif" alt="Tikaram Gahane">
+                <img src="/static/img/boy-logo.avif" alt="Tikaram Gahane - Backend Developer" loading="lazy" width="500" height="500">
             </div>
         </div>
     </div>
@@ -140,13 +140,16 @@
         <div class="project-grid">
             <article class="project-card">
                 <div class="project-img"
-                    style="background-image: url('https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=1000');">
+                    style="background-image: url('https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=1000');"
+                    role="img" aria-label="Student Management System project screenshot">
                     <div class="project-overlay">
                         <div class="project-links-overlay">
-                            <a href="https://student-management-1-f2s8.onrender.com/" class="btn-icon"><i
-                                    data-lucide="link"></i></a>
-                            <a href="https://github.com/tikaramgahane2k4/Student-Management" class="btn-icon"><i
-                                    data-lucide="github"></i></a>
+                            <a href="https://student-management-1-f2s8.onrender.com/" class="btn-icon" target="_blank" rel="noopener noreferrer" aria-label="Open Student Management System project" title="View Project">
+                                <i data-lucide="link" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://github.com/tikaramgahane2k4/Student-Management" class="btn-icon" target="_blank" rel="noopener noreferrer" aria-label="View Student Management System source code on GitHub" title="View Code">
+                                <i data-lucide="github" aria-hidden="true"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -165,13 +168,18 @@
 
             <article class="project-card">
                 <div class="project-img"
-                    style="background-image: url('https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?auto=format&fit=crop&q=80&w=1000');">
+                    style="background-image: url('https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?auto=format&fit=crop&q=80&w=1000');"
+                    role="img" aria-label="Weather Application project screenshot">
                     <div class="project-overlay">
                         <div class="project-links-overlay">
                             <a href="https://weather-app-uhqt.onrender.com/" class="btn-icon"
-                                style="background: var(--secondary);"><i data-lucide="link"></i></a>
+                                style="background: var(--secondary);" target="_blank" rel="noopener noreferrer" aria-label="Open Weather Application project" title="View Project">
+                                <i data-lucide="link" aria-hidden="true"></i>
+                            </a>
                             <a href="https://github.com/tikaramgahane2k4/Weather-App" class="btn-icon"
-                                style="background: var(--secondary);"><i data-lucide="github"></i></a>
+                                style="background: var(--secondary);" target="_blank" rel="noopener noreferrer" aria-label="View Weather Application source code on GitHub" title="View Code">
+                                <i data-lucide="github" aria-hidden="true"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -361,25 +369,25 @@
                 {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                 {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                    <i data-lucide="{% if category == 'success' %}check-circle{% else %}alert-circle{% endif %}"></i>
+                <div class="alert alert-{{ category }}" role="alert">
+                    <i data-lucide="{% if category == 'success' %}check-circle{% else %}alert-circle{% endif %}" aria-hidden="true"></i>
                     <span>{{ message }}</span>
                 </div>
                 {% endfor %}
                 {% endif %}
                 {% endwith %}
-                <form action="{{ url_for('contact') }}" method="POST">
+                <form action="{{ url_for('contact') }}" method="POST" novalidate>
                     <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" name="name" placeholder="John Doe" required>
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="John Doe" required aria-required="true">
                     </div>
                     <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" name="email" placeholder="john@example.com" required>
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required aria-required="true">
                     </div>
                     <div class="form-group">
-                        <label>Message</label>
-                        <textarea name="message" rows="4" placeholder="How can I help you?" required></textarea>
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="4" placeholder="How can I help you?" required aria-required="true"></textarea>
                     </div>
                     <button type="submit" class="btn-submit">Send Message</button>
                 </form>
