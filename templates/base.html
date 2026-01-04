@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Tikaram | Creative Developer & Designer{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+    <div class="mesh-bg"></div>
+    <div class="bg-dot"></div>
+
+    <header id="header">
+        <div class="container">
+            <div class="inner nav-content">
+                <a href="/" class="logo">Tikaram.</a>
+                <div class="nav-links desktop-only">
+                    <a href="{{ url_for('index') }}#about">About</a>
+                    <a href="{{ url_for('index') }}#projects">Work</a>
+                    <a href="{{ url_for('index') }}#education">Education</a>
+                    <a href="{{ url_for('index') }}#skills">Skills</a>
+                    <a href="{{ url_for('resume') }}" class="btn-resume">Resume</a>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                        <i data-lucide="moon" class="moon"></i>
+                        <i data-lucide="sun" class="sun"></i>
+                    </button>
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                        <i data-lucide="menu"></i>
+                    </button>
+                </div>
+                <div class="btn-contact-wrapper desktop-only">
+                    <a href="{{ url_for('index') }}#contact" class="btn-contact-inner">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-inner">
+            <button class="mobile-menu-close" id="mobile-menu-close"><i data-lucide="x"></i></button>
+            <nav class="mobile-nav">
+                <a href="{{ url_for('index') }}#about" class="mobile-link">About</a>
+                <a href="{{ url_for('index') }}#projects" class="mobile-link">Work</a>
+                <a href="{{ url_for('index') }}#education" class="mobile-link">Education</a>
+                <a href="{{ url_for('index') }}#skills" class="mobile-link">Skills</a>
+                <a href="{{ url_for('resume') }}" class="mobile-link">Resume</a>
+                <a href="{{ url_for('index') }}#contact" class="btn-contact-inner mobile-contact">Get in Touch</a>
+            </nav>
+        </div>
+    </div>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com/tikaram24" target="_blank" aria-label="GitHub"><i
+                        data-lucide="github"></i></a>
+                <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+                <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+                <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+            </div>
+            <p class="copyright">© 2026 Tikaram Gahane. Built with passion and code.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Custom Cursor Logic
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+        let mouseX = 0, mouseY = 0;
+        let dotX = 0, dotY = 0;
+        let outlineX = 0, outlineY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // Update mouse position for card glow effects
+            document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+            document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+        });
+
+        const animateCursor = () => {
+            // Speed for dot (snappier)
+            dotX += (mouseX - dotX) * 0.5;
+            dotY += (mouseY - dotY) * 0.5;
+
+            // Speed for outline (smoother lag)
+            outlineX += (mouseX - outlineX) * 0.15;
+            outlineY += (mouseY - outlineY) * 0.15;
+
+            cursorDot.style.transform = `translate(${dotX - 3}px, ${dotY - 3}px)`;
+            cursorOutline.style.transform = `translate(${outlineX - 15}px, ${outlineY - 15}px)`;
+
+            requestAnimationFrame(animateCursor);
+        };
+        animateCursor();
+
+        // Cursor scale on hover
+        const updateInteractiveListeners = () => {
+            const interactiveElements = document.querySelectorAll('a, button, .interactive, .project-card, .edu-card, .stat-card');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorDot.classList.add('expanding');
+                    cursorOutline.classList.add('expanding');
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursorDot.classList.remove('expanding');
+                    cursorOutline.classList.remove('expanding');
+                });
+            });
+        };
+        updateInteractiveListeners();
+
+        // Scroll Reveal Logic
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // observer.unobserve(entry.target); // Keep observing if we want repeat animations
+                }
+            });
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, {
+            threshold: 0.1
+        });
+
+        const initReveal = () => {
+            const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+            revealElements.forEach(el => revealObserver.observe(el));
+        };
+        initReveal();
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            html.classList.add('light-mode');
+        } else if (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches) {
+            html.classList.add('light-mode');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('light-mode');
+            const currentTheme = html.classList.contains('light-mode') ? 'light' : 'dark';
+            localStorage.setItem('theme', currentTheme);
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Logic
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        const closeMenu = () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        mobileMenuClose.addEventListener('click', closeMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>
