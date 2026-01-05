@@ -133,7 +133,7 @@
 <section id="projects" class="reveal">
     <div class="container">
         <div class="section-header reveal">
-            <h2>Selected Work</h2>
+            <h2>Featured Projects</h2>
             <p style="font-size: 1.2rem;">A collection of some of my most impactful work and database-driven
                 applications.</p>
         </div>
@@ -354,14 +354,14 @@
                     <div class="method"
                         style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: var(--radius-sm);">
                         <i data-lucide="map-pin" style="color: var(--secondary);"></i>
-                        <span>Dharamshala, Himachal Pradesh</span>
+                        <span>Nagpur, Maharashtra</span>
                     </div>
                 </div>
 
-                <div class="social-links" style="justify-content: flex-start; margin-top: auto;">
-                    <a href="#"><i data-lucide="github"></i></a>
-                    <a href="#"><i data-lucide="twitter"></i></a>
-                    <a href="#"><i data-lucide="linkedin"></i></a>
+                <div class="social-links" style="justify-content: flex-start; margin-top: auto; flex-wrap: wrap; gap: clamp(1rem, 2vw, 1.5rem);">
+                    <a href="https://github.com/tikaramgahane2k4?tab=overview&from=2026-01-01&to=2026-01-06"><i data-lucide="github"></i></a>
+                    <a href="https://www.instagram.com/pawan_gahane_07?igsh=MTdlZDNlODhnaXR3MA=="><i data-lucide="instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/tikaram-gahane-1804bb343/"><i data-lucide="linkedin"></i></a>
                 </div>
             </div>
 
@@ -442,42 +442,5 @@
     }
 
     type();
-
-    // Hero visual tilt & parallax effects
-    const heroVisual = document.querySelector('.hero-visual');
-    if (heroVisual) {
-        const hvImg = heroVisual.querySelector('img');
-
-        heroVisual.addEventListener('mousemove', (e) => {
-            const rect = heroVisual.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width - 0.5;
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
-            const rotY = x * 12; // horizontal tilt
-            const rotX = -y * 10; // vertical tilt
-            heroVisual.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(0)`;
-            hvImg.style.transform = `scale(1.06) translate(${x * 6}px, ${y * 6}px)`;
-        });
-
-        heroVisual.addEventListener('mouseenter', () => {
-            heroVisual.classList.add('glow');
-        });
-
-        heroVisual.addEventListener('mouseleave', () => {
-            heroVisual.classList.remove('glow');
-            heroVisual.style.transform = '';
-            hvImg.style.transform = '';
-        });
-
-        // Touch support: simple press effect
-        heroVisual.addEventListener('touchstart', () => {
-            heroVisual.classList.add('glow');
-        }, { passive: true });
-
-        heroVisual.addEventListener('touchend', () => {
-            heroVisual.classList.remove('glow');
-            heroVisual.style.transform = '';
-            hvImg.style.transform = '';
-        });
-    }
 </script>
 {% endblock %}

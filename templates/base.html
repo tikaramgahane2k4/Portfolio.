@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5, user-scalable=yes">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5, user-scalable=yes">
     <meta name="description" content="Tikaram Gahane - Backend Developer | Python | Flask | FastAPI | PostgreSQL">
     <meta name="theme-color" content="#000000">
     <meta name="color-scheme" content="dark light">
@@ -18,10 +19,33 @@
 </head>
 
 <body>
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-outline" id="cursor-outline"></div>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-icon">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Monitor/Screen -->
+                    <rect x="40" y="50" width="120" height="80" rx="4" fill="none" stroke="currentColor" stroke-width="3" class="code-screen"/>
+                    <!-- Code Lines -->
+                    <line x1="55" y1="70" x2="90" y2="70" stroke="var(--accent-teal)" stroke-width="2.5" class="code-line line-1"/>
+                    <line x1="55" y1="85" x2="120" y2="85" stroke="var(--accent-pink)" stroke-width="2.5" class="code-line line-2"/>
+                    <line x1="55" y1="100" x2="105" y2="100" stroke="var(--accent-gold)" stroke-width="2.5" class="code-line line-3"/>
+                    <line x1="55" y1="115" x2="135" y2="115" stroke="var(--primary)" stroke-width="2.5" class="code-line line-4"/>
+                    <!-- Monitor Stand -->
+                    <rect x="85" y="130" width="30" height="15" rx="2" fill="currentColor" class="stand"/>
+                    <rect x="70" y="145" width="60" height="4" rx="2" fill="currentColor" class="base"/>
+                    <!-- Cursor Blink -->
+                    <circle cx="140" cy="115" r="2" fill="var(--primary)" class="cursor-blink"/>
+                </svg>
+            </div>
+            <h1 class="splash-title">Welcome to My Portfolio</h1>
+            <div class="splash-loader">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="mesh-bg"></div>
-    <div class="bg-dot"></div>
 
     <header id="header">
         <div class="container">
@@ -39,7 +63,8 @@
                         <i data-lucide="moon" class="moon" aria-hidden="true"></i>
                         <i data-lucide="sun" class="sun" aria-hidden="true"></i>
                     </button>
-                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu"
+                        aria-expanded="false" aria-controls="mobile-menu">
                         <i data-lucide="menu" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -73,74 +98,52 @@
     <footer role="contentinfo">
         <div class="container">
             <nav class="social-links" aria-label="Social Media Links">
-                <a href="https://github.com/tikaram24" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <a href="https://github.com/tikaramgahane2k4" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                     <i data-lucide="github" aria-hidden="true"></i>
                 </a>
-                <a href="#" aria-label="Twitter">
+                <a href="https://twitter.com/tikaram_gahane" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                     <i data-lucide="twitter" aria-hidden="true"></i>
                 </a>
-                <a href="#" aria-label="LinkedIn">
+                <a href="https://www.linkedin.com/in/tikaram-gahane-1804bb343/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                     <i data-lucide="linkedin" aria-hidden="true"></i>
                 </a>
-                <a href="#" aria-label="Instagram">
+                <a href="https://www.instagram.com/pawan_gahane_07" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                     <i data-lucide="instagram" aria-hidden="true"></i>
                 </a>
             </nav>
-            <p class="copyright">© 2026 Tikaram Gahane. Built with passion and code.</p>
+            <p class="copyright">© 2025-2026 Tikaram Gahane. Built with passion and code.</p>
         </div>
     </footer>
 
     <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-
-        // Custom Cursor Logic
-        const cursorDot = document.getElementById('cursor-dot');
-        const cursorOutline = document.getElementById('cursor-outline');
-        let mouseX = 0, mouseY = 0;
-        let dotX = 0, dotY = 0;
-        let outlineX = 0, outlineY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-
-            // Update mouse position for card glow effects
-            document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
-            document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+        // Splash Screen Logic
+        window.addEventListener('load', function() {
+            const splashScreen = document.getElementById('splashScreen');
+            
+            setTimeout(() => {
+                splashScreen.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 800);
+            }, 3000);
         });
 
-        const animateCursor = () => {
-            // Speed for dot (snappier)
-            dotX += (mouseX - dotX) * 0.5;
-            dotY += (mouseY - dotY) * 0.5;
+        // Detect touch device
+        function isTouchDevice() {
+            return (('ontouchstart' in window) ||
+                (navigator.maxTouchPoints > 0) ||
+                (navigator.msMaxTouchPoints > 0));
+        }
 
-            // Speed for outline (smoother lag)
-            outlineX += (mouseX - outlineX) * 0.15;
-            outlineY += (mouseY - outlineY) * 0.15;
+        // Add class to body for touch devices
+        if (isTouchDevice()) {
+            document.body.classList.add('touch-device');
+        }
 
-            cursorDot.style.transform = `translate(${dotX - 3}px, ${dotY - 3}px)`;
-            cursorOutline.style.transform = `translate(${outlineX - 15}px, ${outlineY - 15}px)`;
-
-            requestAnimationFrame(animateCursor);
-        };
-        animateCursor();
-
-        // Cursor scale on hover
-        const updateInteractiveListeners = () => {
-            const interactiveElements = document.querySelectorAll('a, button, .interactive, .project-card, .edu-card, .stat-card');
-            interactiveElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursorDot.classList.add('expanding');
-                    cursorOutline.classList.add('expanding');
-                });
-                el.addEventListener('mouseleave', () => {
-                    cursorDot.classList.remove('expanding');
-                    cursorOutline.classList.remove('expanding');
-                });
-            });
-        };
-        updateInteractiveListeners();
+        // Initialize Lucide icons
+        lucide.createIcons();
 
         // Scroll Reveal Logic
         const revealCallback = (entries, observer) => {
@@ -179,34 +182,97 @@
             localStorage.setItem('theme', currentTheme);
         });
 
-        // Header scroll effect
+        // Header scroll effect with smooth transition
+        let lastScroll = 0;
         window.addEventListener('scroll', () => {
             const header = document.getElementById('header');
-            if (window.scrollY > 50) {
+            const currentScroll = window.scrollY;
+
+            if (currentScroll > 50) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
+
+            // Hide header on scroll down, show on scroll up
+            // if (currentScroll > lastScroll && currentScroll > 100) {
+            //     header.style.transform = 'translateY(-100%)';
+            // } else {
+            //     header.style.transform = 'translateY(0)';
+            // }
+            header.style.transform = 'translateY(0)';
+
+            lastScroll = currentScroll;
         });
 
-        // Mobile Menu Logic
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href !== '') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const headerOffset = 100; // 80px header + 20px padding for full content visibility
+                        const elementPosition = target.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        const mobileMenu = document.getElementById('mobile-menu');
+                        if (mobileMenu && mobileMenu.classList.contains('active')) {
+                            mobileMenu.classList.remove('active');
+                            document.body.style.overflow = 'auto';
+                            document.getElementById('mobile-menu-toggle').setAttribute('aria-expanded', 'false');
+                        }
+                    }
+                }
+            });
+        });
+
+        // Mobile Menu Logic with improved touch handling
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const mobileMenuClose = document.getElementById('mobile-menu-close');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
 
-        mobileMenuToggle.addEventListener('click', () => {
+        const openMenu = () => {
             mobileMenu.classList.add('active');
             document.body.style.overflow = 'hidden';
-        });
+            mobileMenuToggle.setAttribute('aria-expanded', 'true');
+            // Focus on first link for keyboard navigation
+            const firstLink = mobileMenu.querySelector('.mobile-link');
+            if (firstLink) firstLink.focus();
+        };
 
         const closeMenu = () => {
             mobileMenu.classList.remove('active');
             document.body.style.overflow = 'auto';
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenuToggle.focus();
         };
 
+        mobileMenuToggle.addEventListener('click', openMenu);
         mobileMenuClose.addEventListener('click', closeMenu);
         mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                closeMenu();
+            }
+        });
+
+        // Close menu when clicking outside
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) {
+                closeMenu();
+            }
+        });
 
     </script>
     {% block scripts %}{% endblock %}
