@@ -120,14 +120,27 @@
         window.addEventListener('load', function() {
             const splashScreen = document.getElementById('splashScreen');
             
-            setTimeout(() => {
-                splashScreen.classList.add('fade-out');
-                
+            // Check if splash screen has already been shown in this session
+            const splashShown = sessionStorage.getItem('splashShown');
+            
+            if (!splashShown) {
+                // First time visitor in this session - show splash screen
                 setTimeout(() => {
-                    splashScreen.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }, 800);
-            }, 3000);
+                    splashScreen.classList.add('fade-out');
+                    
+                    setTimeout(() => {
+                        splashScreen.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }, 800);
+                }, 3000);
+                
+                // Mark splash screen as shown
+                sessionStorage.setItem('splashShown', 'true');
+            } else {
+                // Splash screen already shown - hide it immediately
+                splashScreen.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
         });
 
         // Detect touch device
@@ -176,10 +189,20 @@
             html.classList.add('light-mode');
         }
 
-        themeToggle.addEventListener('click', () => {
+        const toggleTheme = () => {
             html.classList.toggle('light-mode');
             const currentTheme = html.classList.contains('light-mode') ? 'light' : 'dark';
             localStorage.setItem('theme', currentTheme);
+        };
+
+        themeToggle.addEventListener('click', toggleTheme);
+        
+        // Add keyboard support
+        themeToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleTheme();
+            }
         });
 
         // Header scroll effect with smooth transition
