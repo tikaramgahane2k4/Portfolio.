@@ -116,32 +116,31 @@
     </footer>
 
     <script>
-        // Splash Screen Logic
-        window.addEventListener('load', function() {
-            const splashScreen = document.getElementById('splashScreen');
-            
-            // Check if splash screen has already been shown in this session
+        // Splash Screen Logic - only show once per session and skip on internal nav
+        const splashScreen = document.getElementById('splashScreen');
+        if (splashScreen) {
             const splashShown = sessionStorage.getItem('splashShown');
-            
-            if (!splashShown) {
-                // First time visitor in this session - show splash screen
+
+            const hideSplash = () => {
+                splashScreen.classList.add('fade-out');
                 setTimeout(() => {
-                    splashScreen.classList.add('fade-out');
-                    
-                    setTimeout(() => {
-                        splashScreen.style.display = 'none';
-                        document.body.style.overflow = 'auto';
-                    }, 800);
-                }, 3000);
-                
-                // Mark splash screen as shown
-                sessionStorage.setItem('splashShown', 'true');
-            } else {
-                // Splash screen already shown - hide it immediately
+                    splashScreen.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 650);
+            };
+
+            if (splashShown) {
                 splashScreen.style.display = 'none';
                 document.body.style.overflow = 'auto';
+            } else {
+                // flag immediately so route changes in the same session skip the splash
+                sessionStorage.setItem('splashShown', 'true');
+                document.body.style.overflow = 'hidden';
+                window.addEventListener('load', () => {
+                    setTimeout(hideSplash, 2200);
+                });
             }
-        });
+        }
 
         // Detect touch device
         function isTouchDevice() {

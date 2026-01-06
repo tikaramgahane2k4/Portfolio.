@@ -369,14 +369,14 @@
                 {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                 {% for category, message in messages %}
-                <div class="alert alert-{{ category }}" role="alert">
+                <div class="alert alert-{{ category }}" role="alert" style="margin-bottom: 1.5rem;">
                     <i data-lucide="{% if category == 'success' %}check-circle{% else %}alert-circle{% endif %}" aria-hidden="true"></i>
                     <span>{{ message }}</span>
                 </div>
                 {% endfor %}
                 {% endif %}
                 {% endwith %}
-                <form action="{{ url_for('contact') }}" method="POST" novalidate>
+                <form action="{{ url_for('contact') }}" method="POST" novalidate id="contact-form">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" placeholder="John Doe" required aria-required="true">
@@ -389,7 +389,7 @@
                         <label for="message">Message</label>
                         <textarea id="message" name="message" rows="4" placeholder="How can I help you?" required aria-required="true"></textarea>
                     </div>
-                    <button type="submit" class="btn-submit">Send Message</button>
+                    <button type="submit" class="btn-submit" id="submit-btn">Send Message</button>
                 </form>
             </div>
         </div>
@@ -442,5 +442,41 @@
     }
 
     type();
+    
+    // Form validation and handling
+    (function() {
+        const form = document.getElementById('contact-form');
+        if (!form) return;
+        
+        form.addEventListener('submit', function(e) {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            // Validate all fields are filled
+            if (!name || !email || !message) {
+                e.preventDefault();
+                alert('All fields are required!');
+                return false;
+            }
+        });
+        
+        // Check if there's a success message and clear form
+        const alerts = document.querySelectorAll('.alert-success');
+        if (alerts.length > 0) {
+            // Clear form fields on successful submission
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('message').value = '';
+            
+            // Auto-scroll to show the success message
+            setTimeout(() => {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 300);
+        }
+    })();
 </script>
 {% endblock %}
