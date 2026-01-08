@@ -738,8 +738,8 @@ h1 {
 
 .hero-visual {
 	/* responsive ring that scales smoothly on mobile */
-	flex: 0 1 clamp(260px, 40vw, 520px);
-	width: clamp(240px, 60vw, 520px);
+	flex: 0 1 clamp(240px, 38vw, 520px);
+	width: clamp(240px, 70vw, 520px);
 	max-width: 100%;
 	/* make it a perfect circle */
 	aspect-ratio: 1 / 1;
@@ -748,7 +748,8 @@ h1 {
 	box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
 	border: 1px solid var(--glass-border);
 	position: relative;
-	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.5s ease;
+	transform-origin: center;
 	margin: 0 auto;
 	animation: float 3s ease-in-out infinite;
 }
@@ -757,7 +758,18 @@ h1 {
 	display: block;
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+	object-fit: contain;
+	transition: transform 0.65s ease, filter 0.65s ease;
+}
+
+.hero-visual:hover {
+	transform: translateY(-8px) scale(1.03);
+	box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+}
+
+.hero-visual:hover img {
+	transform: scale(1.05) rotate(-1.5deg);
+	filter: saturate(1.1);
 }
 
 /* decorative ring + subtle glow */
@@ -770,6 +782,7 @@ h1 {
 	-webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), black calc(100% - 3px));
 	mask: radial-gradient(farthest-side, transparent calc(100% - 3px), black calc(100% - 3px));
 	opacity: 0.3;
+	animation: spinRing 16s linear infinite;
 }
 
 .hero-visual::after {
@@ -781,6 +794,16 @@ h1 {
 	background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1));
 	pointer-events: none;
 	mix-blend-mode: overlay;
+}
+
+.hero-visual:hover::before {
+	opacity: 0.5;
+}
+
+@keyframes spinRing {
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 .badge {
@@ -3239,7 +3262,6 @@ animation: slideUp 0.6s ease-out backwards;
 		grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
 		gap: clamp(1.25rem, 2.5vw, 1.5rem);
 	}
-
 	.skills-container {
 		grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr)) !important;
 	}
@@ -3265,6 +3287,20 @@ animation: slideUp 0.6s ease-out backwards;
 
 	section {
 		padding: clamp(4rem, 8vw, 5rem) 0;
+	}
+}
+
+/* Mid phones (up to 540px) */
+@media (max-width: 540px) {
+	.hero-visual {
+		width: clamp(220px, 82vw, 320px);
+		height: auto;
+		flex: 0 1 auto;
+		aspect-ratio: 1 / 1;
+	}
+
+	.hero-visual img {
+		object-fit: contain;
 	}
 }
 
@@ -3397,8 +3433,8 @@ animation: slideUp 0.6s ease-out backwards;
 	}
 
 	.hero-visual {
-		width: 200px !important;
-		height: 200px !important;
+		width: clamp(170px, 70vw, 230px) !important;
+		height: auto !important;
 		aspect-ratio: 1 / 1;
 		border-radius: 50%;
 	}
