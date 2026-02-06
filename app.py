@@ -1,7 +1,15 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_DIR = os.path.abspath(os.path.join(BASE_DIR, 'frontend'))
+
+app = Flask(
+    __name__,
+    template_folder=os.path.join(FRONTEND_DIR, 'templates'),
+    static_folder=os.path.join(FRONTEND_DIR, 'static'),
+    static_url_path='/static'
+)
 
 # Simple .env loader
 env_path = os.path.join(os.path.dirname(__file__), '.env')
