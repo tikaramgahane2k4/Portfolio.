@@ -225,7 +225,7 @@
             header.style.transform = 'translateY(0)';
 
             lastScroll = currentScroll;
-        });
+        }, { passive: true });
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
