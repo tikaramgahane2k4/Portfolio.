@@ -63,4 +63,9 @@ def contact():
     return redirect(url_for('index') + '#contact')
 
 if __name__ == '__main__':
+    # For development use Flask's built-in server
     app.run(debug=True, port=5000)
+
+# For production, use Gunicorn:
+#   gunicorn -w 4 -b 0.0.0.0:5000 app:app
+# This will serve static files more efficiently and handle more requests smoothly.

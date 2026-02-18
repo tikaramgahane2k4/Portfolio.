@@ -157,6 +157,33 @@
         // Initialize Lucide icons
         lucide.createIcons();
 
+        // Splash screen auto-hide for smooth entry
+        window.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                const splash = document.getElementById('splashScreen');
+                if (splash) splash.classList.add('fade-out');
+            }, 1200); // 1.2s for animation
+        });
+
+        // Reveal on scroll using Intersection Observer
+        document.addEventListener('DOMContentLoaded', function () {
+            const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+                reveals.forEach(el => observer.observe(el));
+            } else {
+                // Fallback for old browsers
+                reveals.forEach(el => el.classList.add('revealed'));
+            }
+        });
+
         // Scroll Reveal Logic
         const revealCallback = (entries, observer) => {
             entries.forEach(entry => {
